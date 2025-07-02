@@ -139,7 +139,7 @@ function App() {
           </VStack>
           {selectedMenu.id === "news_app" && loadingNewsData && <p>Loading News Data... </p>}
           {selectedMenu.id === "news_app" && !loadingNewsData &&
-            newsData.map((newsInfo: Article) => (
+            newsData?.map((newsInfo: Article) => (
               <UCard
                 key={newsInfo?.title}
                 author={newsInfo?.author}
