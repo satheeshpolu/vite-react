@@ -73,7 +73,7 @@ function App() {
   useEffect(() => {
     setLoadingNewsData(true);
     fetch(
-      "https://newsapi.org/v2/everything?q=Apple&from=2025-07-01&sortBy=popularity&apiKey=4830d59a75ee49d0be9be1bf98eaf49b"
+      "https://newsapi.org/v2/everything?q=Apple&from=2025-07-01&sortBy=popularity&apiKey=<TODO>"
     )
       .then((response) => response.json())
       .then((data) => {
