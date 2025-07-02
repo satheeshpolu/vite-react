@@ -1,7 +1,9 @@
 import { Box, Flex, VStack, Text, Button, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import UCard from "./components/UCard";
-import ArticleCard from './components/ArticleCard';
+import ArticleCard, {Article } from './components/ArticleCard';
+
+
 // Define allowed keys
 type MenuKey = "dashboard" | "profile" | "settings" | "news_app";
 
@@ -51,7 +53,16 @@ function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [newsData, setNewsData] = useState([]);
   const [loadingNewsData, setLoadingNewsData] = useState(false);
-  const [articleData, setArticleData] = useState(false);
+  const [articleData, setArticleData] = useState({
+  author: "",
+  content: "",
+  description: "",
+  publishedAt: "",
+  source: { id: "", name: "" },
+  title: "",
+  url: "",
+  urlToImage: ""
+});
 
   // Load items when selectedMenu changes
   useEffect(() => {
@@ -128,13 +139,13 @@ function App() {
           </VStack>
           {selectedMenu.id === "news_app" && loadingNewsData && <p>Loading News Data... </p>}
           {selectedMenu.id === "news_app" && !loadingNewsData &&
-            newsData.map((newsInfo) => (
+            newsData.map((newsInfo: Article) => (
               <UCard
-                key={newsInfo.title}
-                author={newsInfo.author}
-                title={newsInfo.title}
-                description={newsInfo.description}
-                urlToImage={newsInfo.urlToImage}
+                key={newsInfo?.title}
+                author={newsInfo?.author}
+                title={newsInfo?.title}
+                description={newsInfo?.description}
+                urlToImage={newsInfo?.urlToImage}
                 onClick={() => setArticleData(newsInfo)}
               ></UCard>
             ))}

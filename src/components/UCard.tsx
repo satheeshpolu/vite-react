@@ -29,6 +29,3 @@ const UCard = ({ author, title, description, urlToImage, onClick }: UCardProps) 
 };
 
 export default UCard;
-function onClick() {
-  throw new Error("Function not implemented.");
-}

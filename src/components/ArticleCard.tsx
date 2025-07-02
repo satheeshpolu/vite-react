@@ -3,14 +3,12 @@ import {
   Image,
   Text,
   Link,
-  Heading,
   Badge,
   Flex,
   Spacer,
-  Stack,
 } from "@chakra-ui/react";
 
-type Article = {
+export type Article = {
   author: string;
   content: string;
   description: string;
@@ -21,7 +19,11 @@ type Article = {
   urlToImage: string;
 };
 
-const ArticleCard = ({ article }: { article: Article }) => {
+type ArticleCardProps = {
+  article: Article;
+};
+
+const ArticleCard = ({ article} : ArticleCardProps) => {
   const formattedDate = new Date(article.publishedAt).toLocaleString();
 
   return (
@@ -76,7 +78,6 @@ const ArticleCard = ({ article }: { article: Article }) => {
       {/* Read More */}
       <Link
         href={article.url}
-        isExternal
         color="blue.700"
         fontWeight="bold"
         fontSize="sm"
