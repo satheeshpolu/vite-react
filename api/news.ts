@@ -26,7 +26,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const apiKey = process.env.NEWS_API_KEY;
-
+  console.log('NEWS_API_KEY => ', apiKey);
   // Check if API key exists
   if (!apiKey) {
     return res.status(500).json({ error: 'News API key not configured' });
