@@ -1,8 +1,7 @@
 import { Box, Flex, VStack, Text, Button, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import UCard from "./components/UCard";
-import ArticleCard, {Article } from './components/ArticleCard';
-
+import ArticleCard, { Article } from "./components/ArticleCard";
 
 // Define allowed keys
 type MenuKey = "dashboard" | "profile" | "settings" | "news_app";
@@ -54,16 +53,20 @@ function App() {
   const [newsData, setNewsData] = useState([]);
   const [loadingNewsData, setLoadingNewsData] = useState(false);
   const [articleData, setArticleData] = useState({
-  author: "",
-  content: "",
-  description: "",
-  publishedAt: "",
-  source: { id: "", name: "" },
-  title: "",
-  url: "",
-  urlToImage: ""
-});
+    author: "",
+    content: "",
+    description: "",
+    publishedAt: "",
+    source: { id: "", name: "" },
+    title: "",
+    url: "",
+    urlToImage: "",
+  });
 
+  const today = new Date();
+  today.setDate(today.getDate() - 1); // Subtract one day
+  const formattedDate = today.toISOString().split("T")[0];
+  const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
   // Load items when selectedMenu changes
   useEffect(() => {
     setItems(contentData[selectedMenu.id]);
@@ -73,7 +76,7 @@ function App() {
   useEffect(() => {
     setLoadingNewsData(true);
     fetch(
-      "https://newsapi.org/v2/everything?q=Apple&from=2025-07-01&sortBy=popularity&apiKey=<TODO>"
+      `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -137,8 +140,11 @@ function App() {
               </Button>
             ))}
           </VStack>
-          {selectedMenu.id === "news_app" && loadingNewsData && <p>Loading News Data... </p>}
-          {selectedMenu.id === "news_app" && !loadingNewsData &&
+          {selectedMenu.id === "news_app" && loadingNewsData && (
+            <p>Loading News Data... </p>
+          )}
+          {selectedMenu.id === "news_app" &&
+            !loadingNewsData &&
             newsData?.map((newsInfo: Article) => (
               <UCard
                 key={newsInfo?.title}
@@ -152,20 +158,30 @@ function App() {
         </Box>
 
         {/* Right: Detail View */}
-        <Box width="600px" bg="white" p={4} borderRadius="md" boxShadow="sm" overflow="auto">
-        {selectedMenu.id != "news_app" &&   <>
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
-            {selectedItem ? selectedItem.title : "Select an item"}
-          </Text>
-          <Text>
-            {selectedItem
-              ? selectedItem.detail
-              : "Details will appear here once you select an item from the list."}
-          </Text>
-          </>
-        }
+        <Box
+          width="600px"
+          bg="white"
+          p={4}
+          borderRadius="md"
+          boxShadow="sm"
+          overflow="auto"
+        >
+          {selectedMenu.id != "news_app" && (
+            <>
+              <Text fontSize="xl" fontWeight="bold" mb={4}>
+                {selectedItem ? selectedItem.title : "Select an item"}
+              </Text>
+              <Text>
+                {selectedItem
+                  ? selectedItem.detail
+                  : "Details will appear here once you select an item from the list."}
+              </Text>
+            </>
+          )}
 
-          {selectedMenu.id === "news_app" && <ArticleCard article={articleData}></ArticleCard>}
+          {selectedMenu.id === "news_app" && (
+            <ArticleCard article={articleData}></ArticleCard>
+          )}
         </Box>
         <h1>Ads</h1>
       </Flex>
