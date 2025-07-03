@@ -79,7 +79,7 @@ useEffect(() => {
   const isDevelopment = import.meta.env.DEV;
   const apiUrl = isDevelopment 
     ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
-    : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity`;
+    : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
   
   fetch(apiUrl)
     .then((response) => {
