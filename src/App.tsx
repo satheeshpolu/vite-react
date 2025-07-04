@@ -2,9 +2,9 @@ import { Box, Flex, VStack, Text, Button, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import UCard from "./components/UCard";
 import ArticleCard, { Article } from "./components/ArticleCard";
-
+import QuoteCard from "./components/QuoteCard ";
 // Define allowed keys
-type MenuKey = "dashboard" | "profile" | "settings" | "news_app";
+type MenuKey = "dashboard" | "profile" | "settings" | "news_app" | "quotes_app";
 
 // Item structure
 interface Item {
@@ -25,6 +25,7 @@ const menuItems: MenuItem[] = [
   { id: "profile", label: "Profile" },
   { id: "settings", label: "Settings" },
   { id: "news_app", label: "News App" },
+  { id: "quotes_app", label: "Quotes App" },
 ];
 
 // Static data per menu category
@@ -42,6 +43,7 @@ const contentData: Record<MenuKey, any[]> = {
     { id: 2, title: "Notifications", detail: "Control email and push alerts." },
   ],
   news_app: [],
+  quotes_app: [],
 };
 
 type Quote = {
@@ -54,7 +56,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState<Item>(
     contentData.dashboard[0]
   );
-  const [quotes, setQuotes] = useState<Quote | null>(null);
+  const [quotes, setQuotes] = useState<Quote[]>([]);
   const [items, setItems] = useState<Item[]>([]);
   const [newsData, setNewsData] = useState([]);
   const [loadingNewsData, setLoadingNewsData] = useState(false);
@@ -97,11 +99,11 @@ function App() {
         setLoadingNewsData(false);
       });
   }, []);
-useEffect(() => {
-  fetch('https://dummyjson.com/quotes/random')
-  .then(res => res.json())
-  .then(data => setQuotes(data));
-}, []);
+  useEffect(() => {
+    fetch("https://dummyjson.com/quotes")
+      .then((res) => res.json())
+      .then((data) => setQuotes(data?.quotes));
+  }, []);
 
   // useEffect(() => {
   //   setLoadingNewsData(true);
@@ -171,8 +173,9 @@ useEffect(() => {
                 {item.title}
               </Button>
             ))}
-
-            {quotes?.quote}
+            {selectedMenu.id == "quotes_app" && quotes.map((quote) => (
+              <QuoteCard quote={quote?.quote} author={quote?.author} />
+            ))}
           </VStack>
           {selectedMenu.id === "news_app" && loadingNewsData && (
             <p>Loading News Data... </p>
