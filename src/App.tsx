@@ -65,47 +65,24 @@ function App() {
 
   const today = new Date();
   today.setDate(today.getDate() - 1); // Subtract one day
-  const formattedDate = today.toISOString().split("T")[0];
+  // const formattedDate = today.toISOString().split("T")[0];
   // const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
   // Load items when selectedMenu changes
   useEffect(() => {
     setItems(contentData[selectedMenu.id]);
     setSelectedItem(contentData[selectedMenu.id][0]); // optional: auto-select first item
   }, [selectedMenu]);
-// useEffect(() => {
-//   setLoadingNewsData(true);
-  
-//   // Use different URLs for development vs production
-//   const isDevelopment = import.meta.env.DEV;
-//   const apiUrl = isDevelopment 
-//     ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
-//     : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
-  
-//   fetch(apiUrl)
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! status: ${response.status}`);
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       console.log(data.articles);
-//       setNewsData(data.articles);
-//       setLoadingNewsData(false);
-//     })
-//     .catch((error) => {
-//       console.error('Error fetching news:', error);
-//       setLoadingNewsData(false);
-//       // Optional: set an error state
-//       // setError(error.message);
-//     });
-// }, [formattedDate]); // Added formattedDate as dependency
   useEffect(() => {
+    const today = new Date();
+    const isDevelopment = import.meta.env.DEV;
+    today.setDate(today.getDate() - 1); // Subtract one day
+    const formattedDate = today.toISOString().split("T")[0];
+    const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+    const apiUrl = isDevelopment
+      ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`
+      : `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`;
+
     setLoadingNewsData(true);
-      const isDevelopment = import.meta.env.DEV;
-      const apiUrl = isDevelopment 
-    ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
-    : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -114,6 +91,21 @@ function App() {
         setLoadingNewsData(false);
       });
   }, []);
+
+  // useEffect(() => {
+  //   setLoadingNewsData(true);
+  //     const isDevelopment = import.meta.env.DEV;
+  //     const apiUrl = isDevelopment
+  //   ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
+  //   : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
+  //   fetch(apiUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.articles);
+  //       setNewsData(data.articles);
+  //       setLoadingNewsData(false);
+  //     });
+  // }, []);
 
   return (
     <Flex height="100vh" bg="gray.50">
