@@ -1,0 +1,19 @@
+@keyframes scroll-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.scroll-ads-container {
+  animation: scroll-vertical 5s linear infinite;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* match Chakra's gap={6} */
+}
+
+.scroll-wrapper:hover .scroll-ads-container {
+  animation-play-state: paused;
+}

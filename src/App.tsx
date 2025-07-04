@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import UCard from "./components/UCard";
 import ArticleCard, { Article } from "./components/ArticleCard";
 import QuoteCard from "./components/QuoteCard ";
+import ScrollingAds from "./components/ScrollingAds";
+
 // Define allowed keys
 type MenuKey = "dashboard" | "profile" | "settings" | "news_app" | "quotes_app";
 
@@ -151,14 +153,14 @@ function App() {
       <Flex flex="1" p={6} gap={6}>
         {/* Left: Item List */}
         <Box
-          width="400px"
+          width="450px"
           bg="#a3cfff"
           p={4}
           borderRadius="md"
           boxShadow="sm"
           overflow="auto"
         >
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
+        <Text fontSize="xl" fontWeight="bold" mb={4}>
             {selectedMenu.label}
           </Text>
           <VStack>
@@ -173,9 +175,10 @@ function App() {
                 {item.title}
               </Button>
             ))}
-            {selectedMenu.id == "quotes_app" && quotes.map((quote) => (
-              <QuoteCard quote={quote?.quote} author={quote?.author} />
-            ))}
+            {selectedMenu.id == "quotes_app" &&
+              quotes.map((quote) => (
+                <QuoteCard quote={quote?.quote} author={quote?.author} />
+              ))}
           </VStack>
           {selectedMenu.id === "news_app" && loadingNewsData && (
             <p>Loading News Data... </p>
@@ -196,7 +199,7 @@ function App() {
 
         {/* Right: Detail View */}
         <Box
-          width="600px"
+          width="530px"
           bg="white"
           p={4}
           borderRadius="md"
@@ -220,7 +223,7 @@ function App() {
             <ArticleCard article={articleData}></ArticleCard>
           )}
         </Box>
-        <h1>Ads</h1>
+        <ScrollingAds />
       </Flex>
     </Flex>
   );
