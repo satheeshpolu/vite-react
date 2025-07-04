@@ -87,10 +87,10 @@ function App() {
     const isDevelopment = import.meta.env.DEV;
     today.setDate(today.getDate() - 1); // Subtract one day
     const formattedDate = today.toISOString().split("T")[0];
-    const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+    // const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
     const apiUrl = isDevelopment
-      ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`
-      : `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`;
+      ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
+      : `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
 
     setLoadingNewsData(true);
     fetch(apiUrl)
