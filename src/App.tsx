@@ -44,12 +44,17 @@ const contentData: Record<MenuKey, any[]> = {
   news_app: [],
 };
 
+type Quote = {
+  quote: string;
+  author: string;
+};
+
 function App() {
   const [selectedMenu, setSelectedMenu] = useState<MenuItem>(menuItems[0]);
   const [selectedItem, setSelectedItem] = useState<Item>(
     contentData.dashboard[0]
   );
-  const [quotes, setQuotes] = useState(null);
+  const [quotes, setQuotes] = useState<Quote | null>(null);
   const [items, setItems] = useState<Item[]>([]);
   const [newsData, setNewsData] = useState([]);
   const [loadingNewsData, setLoadingNewsData] = useState(false);
