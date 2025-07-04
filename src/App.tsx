@@ -49,6 +49,7 @@ function App() {
   const [selectedItem, setSelectedItem] = useState<Item>(
     contentData.dashboard[0]
   );
+  const [quotes, setQuotes] = useState(null);
   const [items, setItems] = useState<Item[]>([]);
   const [newsData, setNewsData] = useState([]);
   const [loadingNewsData, setLoadingNewsData] = useState(false);
@@ -91,6 +92,11 @@ function App() {
         setLoadingNewsData(false);
       });
   }, []);
+useEffect(() => {
+  fetch('https://dummyjson.com/quotes/random')
+  .then(res => res.json())
+  .then(data => setQuotes(data));
+}, []);
 
   // useEffect(() => {
   //   setLoadingNewsData(true);
@@ -160,6 +166,8 @@ function App() {
                 {item.title}
               </Button>
             ))}
+
+            {quotes?.quote}
           </VStack>
           {selectedMenu.id === "news_app" && loadingNewsData && (
             <p>Loading News Data... </p>
