@@ -1,15 +1,12 @@
-import {
-  Box,
-  Flex,
-  VStack,
-  Text,
-  Button,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Flex, VStack, Text, Button, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import UCard from "./components/UCard";
+import ArticleCard, { Article } from "./components/ArticleCard";
+import QuoteCard from "./components/QuoteCard ";
+import ScrollingAds from "./components/ScrollingAds";
 
 // Define allowed keys
-type MenuKey = 'dashboard' | 'profile' | 'settings';
+type MenuKey = "dashboard" | "profile" | "settings" | "news_app" | "quotes_app";
 
 // Item structure
 interface Item {
@@ -29,10 +26,12 @@ const menuItems: MenuItem[] = [
   { id: "dashboard", label: "Dashboard" },
   { id: "profile", label: "Profile" },
   { id: "settings", label: "Settings" },
+  { id: "news_app", label: "News App" },
+  { id: "quotes_app", label: "Quotes App" },
 ];
 
 // Static data per menu category
-const contentData: Record<MenuKey, Item[]> = {
+const contentData: Record<MenuKey, any[]> = {
   dashboard: [
     { id: 1, title: "Sales Report", detail: "Detailed sales analysis for Q2." },
     { id: 2, title: "User Growth", detail: "User growth increased by 20%." },
@@ -45,18 +44,83 @@ const contentData: Record<MenuKey, Item[]> = {
     { id: 1, title: "Privacy", detail: "Manage your privacy preferences." },
     { id: 2, title: "Notifications", detail: "Control email and push alerts." },
   ],
+  news_app: [],
+  quotes_app: [],
+};
+
+type Quote = {
+  quote: string;
+  author: string;
 };
 
 function App() {
   const [selectedMenu, setSelectedMenu] = useState<MenuItem>(menuItems[0]);
-  const [selectedItem, setSelectedItem] = useState<Item>(contentData.dashboard[0]);
+  const [selectedItem, setSelectedItem] = useState<Item>(
+    contentData.dashboard[0]
+  );
+  const [quotes, setQuotes] = useState<Quote[]>([]);
   const [items, setItems] = useState<Item[]>([]);
+  const [newsData, setNewsData] = useState([]);
+  const [loadingNewsData, setLoadingNewsData] = useState(false);
+  const [articleData, setArticleData] = useState({
+    author: "",
+    content: "",
+    description: "",
+    publishedAt: "",
+    source: { id: "", name: "" },
+    title: "",
+    url: "",
+    urlToImage: "",
+  });
 
+  const today = new Date();
+  today.setDate(today.getDate() - 1); // Subtract one day
+  // const formattedDate = today.toISOString().split("T")[0];
+  // const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
   // Load items when selectedMenu changes
   useEffect(() => {
     setItems(contentData[selectedMenu.id]);
     setSelectedItem(contentData[selectedMenu.id][0]); // optional: auto-select first item
   }, [selectedMenu]);
+  useEffect(() => {
+    const today = new Date();
+    const isDevelopment = import.meta.env.DEV;
+    today.setDate(today.getDate() - 1); // Subtract one day
+    const formattedDate = today.toISOString().split("T")[0];
+    const NEWS_API_KEY = import.meta.env.VITE_NEWS_API_KEY;
+    const apiUrl = isDevelopment
+      ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`
+      : `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${NEWS_API_KEY}`;
+
+    setLoadingNewsData(true);
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.articles);
+        setNewsData(data.articles);
+        setLoadingNewsData(false);
+      });
+  }, []);
+  useEffect(() => {
+    fetch("https://dummyjson.com/quotes")
+      .then((res) => res.json())
+      .then((data) => setQuotes(data?.quotes));
+  }, []);
+
+  // useEffect(() => {
+  //   setLoadingNewsData(true);
+  //     const isDevelopment = import.meta.env.DEV;
+  //     const apiUrl = isDevelopment
+  //   ? `https://newsapi.org/v2/everything?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.VITE_NEWS_API_KEY}`
+  //   : `/api/news?q=Apple&from=${formattedDate}&sortBy=popularity&apiKey=${import.meta.env.NEWS_API_KEY}`;
+  //   fetch(apiUrl)
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       console.log(data.articles);
+  //       setNewsData(data.articles);
+  //       setLoadingNewsData(false);
+  //     });
+  // }, []);
 
   return (
     <Flex height="100vh" bg="gray.50">
@@ -88,8 +152,15 @@ function App() {
       {/* Right Content Area: Two Columns */}
       <Flex flex="1" p={6} gap={6}>
         {/* Left: Item List */}
-        <Box width="300px" bg="#a3cfff" p={4} borderRadius="md" boxShadow="sm">
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
+        <Box
+          width="450px"
+          bg="#a3cfff"
+          p={4}
+          borderRadius="md"
+          boxShadow="sm"
+          overflow="auto"
+        >
+        <Text fontSize="xl" fontWeight="bold" mb={4}>
             {selectedMenu.label}
           </Text>
           <VStack>
@@ -104,20 +175,55 @@ function App() {
                 {item.title}
               </Button>
             ))}
+            {selectedMenu.id == "quotes_app" &&
+              quotes.map((quote) => (
+                <QuoteCard quote={quote?.quote} author={quote?.author} />
+              ))}
           </VStack>
+          {selectedMenu.id === "news_app" && loadingNewsData && (
+            <p>Loading News Data... </p>
+          )}
+          {selectedMenu.id === "news_app" &&
+            !loadingNewsData &&
+            newsData?.map((newsInfo: Article) => (
+              <UCard
+                key={newsInfo?.title}
+                author={newsInfo?.author}
+                title={newsInfo?.title}
+                description={newsInfo?.description}
+                urlToImage={newsInfo?.urlToImage}
+                onClick={() => setArticleData(newsInfo)}
+              ></UCard>
+            ))}
         </Box>
 
         {/* Right: Detail View */}
-        <Box width="600px" bg="white" p={4} borderRadius="md" boxShadow="sm">
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
-            {selectedItem ? selectedItem.title : "Select an item"}
-          </Text>
-          <Text>
-            {selectedItem
-              ? selectedItem.detail
-              : "Details will appear here once you select an item from the list."}
-          </Text>
+        <Box
+          width="530px"
+          bg="white"
+          p={4}
+          borderRadius="md"
+          boxShadow="sm"
+          overflow="auto"
+        >
+          {selectedMenu.id != "news_app" && (
+            <>
+              <Text fontSize="xl" fontWeight="bold" mb={4}>
+                {selectedItem ? selectedItem.title : "Select an item"}
+              </Text>
+              <Text>
+                {selectedItem
+                  ? selectedItem.detail
+                  : "Details will appear here once you select an item from the list."}
+              </Text>
+            </>
+          )}
+
+          {selectedMenu.id === "news_app" && (
+            <ArticleCard article={articleData}></ArticleCard>
+          )}
         </Box>
+        <ScrollingAds />
       </Flex>
     </Flex>
   );
