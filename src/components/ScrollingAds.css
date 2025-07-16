@@ -8,7 +8,7 @@
 }
 
 .scroll-ads-container {
-  animation: scroll-vertical 5s linear infinite;
+  animation: scroll-vertical 15s linear infinite;
   display: flex;
   flex-direction: column;
   gap: 1.5rem; /* match Chakra's gap={6} */
