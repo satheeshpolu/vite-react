@@ -13,7 +13,13 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="blogs" element={<Blogs />}>
+          // <Route path="blogs" element={<Blogs />} />
+          <Route
+            path="blogs"
+            element={
+                <Blogs />
+            }
+          >
             <Route index element={<BlogList />} />
             <Route path=":id" element={<BlogPost />} />
             <Route path="category/:category" element={<BlogCategory />} />
