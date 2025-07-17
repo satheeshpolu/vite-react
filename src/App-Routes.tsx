@@ -3,7 +3,7 @@ import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Blogs from "./pages/blogs/Blogs";
 import Contact from "./pages/Contact";
-import NoPage from "./pages/NoPage";
+import NoPage from "./pages/NoFound";
 import BlogList from "./pages/blogs/BlogList";
 import BlogPost from "./pages/blogs/BlogPost";
 import BlogCategory from "./pages/blogs/BlogCategory";
