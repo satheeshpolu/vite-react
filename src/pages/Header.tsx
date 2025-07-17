@@ -57,10 +57,11 @@ export default function Header() {
     <Box
       bg="#d0cccc26"
       px={4}
-      shadow="md"
+      shadow="lg"
       position="sticky"
       top={0}
       zIndex={1000}
+      backdropFilter="blur(6.3px)"
     >
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Text fontWeight="bold" fontSize="xl" color="teal.500">
