@@ -115,7 +115,6 @@ export default function AllCategory() {
         {products.map((product: any) => (
           <Box
             key={product?.id}
-            borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
             bg={cardBg}
