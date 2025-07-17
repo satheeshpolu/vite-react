@@ -1,6 +1,7 @@
 import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
-import CategoryGrid from './CategoryGrid';
+import CategoryGrid from "./CategoryGrid";
 import ShoppingCartAnimation from "./ShoppingCartAnimation";
+import UnderDevelopment from "@/components/UnderDevelopment";
 
 const Section = ({
   // bg,
@@ -11,7 +12,7 @@ const Section = ({
   title: string;
   subtitle: string;
 }) => (
-  <Box  h="95vh" w="100%">
+  <Box h="95vh" w="100%">
     <Flex h="100%" direction={{ base: "column", md: "row" }} overflow="hidden">
       {/* Left Half */}
       <Box
@@ -45,14 +46,13 @@ const Section = ({
         zIndex={-1}
       >
         <Box transform="skewX(10deg)">
-
+          <UnderDevelopment />
           <ShoppingCartAnimation />
         </Box>
       </Box>
     </Flex>
   </Box>
 );
-
 
 export default function FullPageSections() {
   // const bg1 = "gray.100";
@@ -62,7 +62,8 @@ export default function FullPageSections() {
     {
       bg: "gray.100",
       title: "Welcome to ShopEasy",
-      subtitle: "Discover amazing products, unbeatable prices, and fast delivery—all in one place.",
+      subtitle:
+        "Discover amazing products, unbeatable prices, and fast delivery —all in one place.",
     },
     // {
     //   bg: "white",
@@ -80,7 +81,6 @@ export default function FullPageSections() {
       {sectionsData.map((section, index) => (
         <Section
           key={index}
-
           title={section.title}
           subtitle={section.subtitle}
         />

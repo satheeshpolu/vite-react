@@ -1,9 +1,11 @@
 // pages/Blogs.tsx
+import UnderDevelopment from "@/components/UnderDevelopment";
 import { Outlet, Link } from "react-router-dom";
 
 export default function Blogs() {
   return (
     <div>
+      <UnderDevelopment />
       <h1>Blogs</h1>
       <ul>
         <li><Link to="">All Posts</Link></li>
