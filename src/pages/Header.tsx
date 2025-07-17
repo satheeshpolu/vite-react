@@ -64,7 +64,7 @@ export default function Header() {
     >
       <Flex h={16} alignItems="center" justifyContent="space-between">
         <Text fontWeight="bold" fontSize="xl" color="teal.500">
-          MyLogo
+          Shop Easy
         </Text>
 
         <IconButton size="md" aria-label="Open Menu" display={{ md: "none" }} />
