@@ -1,13 +1,13 @@
-import { Box, Center, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import CategoryGrid from './CategoryGrid';
 import ShoppingCartAnimation from "./ShoppingCartAnimation";
 
 const Section = ({
-  bg,
+  // bg,
   title,
   subtitle,
 }: {
-  bg: string;
+  // bg: string;
   title: string;
   subtitle: string;
 }) => (
@@ -22,7 +22,7 @@ const Section = ({
         justifyContent="center"
         borderRightRadius={{ md: "80px" }}
       >
-        <VStack spacing={2} textAlign="center" px={4}>
+        <VStack textAlign="center" px={4}>
           <Heading fontSize={{ base: "3xl", md: "4xl" }}>{title}</Heading>
           <Text fontSize={{ base: "md", md: "lg" }} maxW="md">
             {subtitle}
@@ -55,9 +55,9 @@ const Section = ({
 
 
 export default function FullPageSections() {
-  const bg1 = "gray.100";
-  const bg2 = "white";
-  const bg3 = "teal.50";
+  // const bg1 = "gray.100";
+  // const bg2 = "white";
+  // const bg3 = "teal.50";
   const sectionsData = [
     {
       bg: "gray.100",
@@ -80,7 +80,7 @@ export default function FullPageSections() {
       {sectionsData.map((section, index) => (
         <Section
           key={index}
-          bg={`gray.${index}00`}
+
           title={section.title}
           subtitle={section.subtitle}
         />

@@ -3,15 +3,10 @@ import {
   Flex,
   HStack,
   IconButton,
-  Button,
-  useDisclosure,
   Stack,
-  // useColorModeValue,
   Text,
-  Link,
 } from "@chakra-ui/react";
-// import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useMatch } from "react-router-dom";
 
 const Links = [
   { name: "Home", to: "/" },
@@ -20,41 +15,62 @@ const Links = [
   { name: "Cart", to: "/cart" },
 ];
 
-const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
-  <Link
-    as={RouterLink}
-    to={to}
-    px={3}
-    py={2}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: "gray.200",
-    }}
-  >
-    {children}
-  </Link>
-);
-
-export default function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+// ✅ This component renders a single nav link with active styling
+const NavLink = ({
+  to,
+  children,
+}: {
+  to: string;
+  children: React.ReactNode;
+}) => {
+  const match = useMatch(to); // Check if current path matches
 
   return (
-    <Box bg="#d0cccc26" px={4} shadow="md" position="sticky" top={0} zIndex={1000}>
-      <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+    <RouterLink
+      to={to}
+      style={{
+        padding: '0.5rem 0.75rem',
+        borderRadius: '0.375rem',
+        fontWeight: match ? 'bold' : 'normal',
+        color: match ? '#0d9488' : '#374151',
+        backgroundColor: match ? '#f3f4f6' : 'transparent',
+        textDecoration: 'none',
+        display: 'block',
+        transition: 'all 0.2s'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.backgroundColor = '#e5e7eb';
+        e.currentTarget.style.color = '#0d9488';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.backgroundColor = match ? '#f3f4f6' : 'transparent';
+        e.currentTarget.style.color = match ? '#0d9488' : '#374151';
+      }}
+    >
+      {children}
+    </RouterLink>
+  );
+};
+
+export default function Header() {
+  return (
+    <Box
+      bg="#d0cccc26"
+      px={4}
+      shadow="md"
+      position="sticky"
+      top={0}
+      zIndex={1000}
+    >
+      <Flex h={16} alignItems="center" justifyContent="space-between">
         <Text fontWeight="bold" fontSize="xl" color="teal.500">
           MyLogo
         </Text>
 
-        <IconButton
-          size={"md"}
-          icon={isOpen ? <Text>X</Text> : <Text>XX</Text>}
-          aria-label={"Open Menu"}
-          display={{ md: "none" }}
-          onClick={isOpen ? onClose : onOpen}
-        />
+        <IconButton size="md" aria-label="Open Menu" display={{ md: "none" }} />
 
-        <HStack spacing={4} display={{ base: "none", md: "flex" }}>
+        {/* Desktop nav */}
+        <HStack display={{ base: "none", md: "flex" }}>
           {Links.map((link) => (
             <NavLink key={link.to} to={link.to}>
               {link.name}
@@ -63,17 +79,16 @@ export default function Header() {
         </HStack>
       </Flex>
 
-      {!isOpen ? (
-        <Box pb={4} display={{ md: "none" }}>
-          <Stack as={"nav"} spacing={4}>
-            {Links.map((link) => (
-              <NavLink key={link.to} to={link.to}>
-                {link.name}
-              </NavLink>
-            ))}
-          </Stack>
-        </Box>
-      ) : null}
+      {/* Mobile nav (optional toggle) */}
+      <Box pb={4} display={{ md: "none" }}>
+        <Stack as="nav">
+          {Links.map((link) => (
+            <NavLink key={link.to} to={link.to}>
+              {link.name}
+            </NavLink>
+          ))}
+        </Stack>
+      </Box>
     </Box>
   );
 }

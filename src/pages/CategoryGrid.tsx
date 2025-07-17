@@ -2,7 +2,6 @@ import {
   Box,
   Grid,
   Text,
-  useColorModeValue,
   Icon,
   Flex,
 } from "@chakra-ui/react";

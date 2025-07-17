@@ -29,14 +29,13 @@ import {
   Text,
   Heading,
   VStack,
-  Badge,
   Button,
   Stack,
   //   useColorModeValue,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+import LoadingSkeleton from "../components/LoadingSkeleton";
 // 🧠 Example: This would come from your API or router loader
 // const products = [
 //   {
@@ -80,12 +79,18 @@ export default function AllCategory() {
 
   return (
     <Box p={6}>
+      <Button
+        mt={8}
+        onClick={() => navigate(-1)}
+        colorScheme="teal"
+        variant="outline"
+      >
+        ← Back
+      </Button>
       <Heading size="lg" mb={6}>
         Category: {category}
       </Heading>
-      <Button mt={8} onClick={() => navigate(-1)} colorScheme="teal">
-        ← Back
-      </Button>
+
       <Grid
         templateColumns={{
           base: "repeat(1, 1fr)",
@@ -96,13 +101,20 @@ export default function AllCategory() {
         gap={6}
       >
         {loading && (
-          <Heading size="lg" mb={6} align="center">
-            Loading...
-          </Heading>
+          <>
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+          </>
         )}
-        {products.map((product) => (
+        {products.map((product: any) => (
           <Box
-            key={product.id}
+            key={product?.id}
             borderWidth="1px"
             borderRadius="lg"
             overflow="hidden"
@@ -112,20 +124,18 @@ export default function AllCategory() {
             _hover={{ transform: "scale(1.02)", transition: "0.2s" }}
           >
             <Image
-              src={product.thumbnail}
-              alt={product.title}
+              src={product?.thumbnail}
+              alt={product?.title}
               objectFit="cover"
               w="100%"
               h="200px"
             />
 
             <Box p={4}>
-              <VStack align="start" spacing={2}>
-                <Badge colorScheme="teal">{product.category}</Badge>
-
+              <VStack>
                 <Heading fontSize="lg">{product.title}</Heading>
 
-                <Text fontSize="sm" color="gray.600" noOfLines={2}>
+                <Text fontSize="sm" color="gray.600">
                   {product.description}
                 </Text>
 
@@ -140,6 +150,7 @@ export default function AllCategory() {
                     size="sm"
                     colorScheme="teal"
                     onClick={() => console.log(product)}
+                    variant="outline"
                   >
                     Add to Cart
                   </Button>
