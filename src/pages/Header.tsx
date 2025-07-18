@@ -5,17 +5,18 @@ import {
   IconButton,
   Stack,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { Link as RouterLink, useMatch } from "react-router-dom";
+import { Link as RouterLink, useMatch, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 const Links = [
-  { name: "Home", to: "/" },
-  { name: "Blogs", to: "/blogs" },
+  // { name: "Home", to: "/" },
+  // { name: "Blogs", to: "/blogs" },
   { name: "Contact", to: "/contact" },
   { name: "Cart", to: "/cart" },
 ];
 
-// ✅ This component renders a single nav link with active styling
 const NavLink = ({
   to,
   children,
@@ -23,28 +24,30 @@ const NavLink = ({
   to: string;
   children: React.ReactNode;
 }) => {
-  const match = useMatch(to); // Check if current path matches
+  const match = useMatch(to);
 
   return (
     <RouterLink
       to={to}
       style={{
-        padding: '0.5rem 0.75rem',
-        borderRadius: '0.375rem',
-        fontWeight: match ? 'bold' : 'normal',
-        color: match ? '#0d9488' : '#374151',
-        backgroundColor: match ? '#f3f4f6' : 'transparent',
-        textDecoration: 'none',
-        display: 'block',
-        transition: 'all 0.2s'
+        padding: "0.5rem 0.75rem",
+        borderRadius: "0.375rem",
+        fontWeight: match ? "bold" : "normal",
+        color: match ? "#0d9488" : "#374151",
+        backgroundColor: match ? "#f3f4f6" : "transparent",
+        textDecoration: "none",
+        display: "block",
+        transition: "all 0.2s",
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#e5e7eb';
-        e.currentTarget.style.color = '#0d9488';
+        e.currentTarget.style.backgroundColor = "#e5e7eb";
+        e.currentTarget.style.color = "#0d9488";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = match ? '#f3f4f6' : 'transparent';
-        e.currentTarget.style.color = match ? '#0d9488' : '#374151';
+        e.currentTarget.style.backgroundColor = match
+          ? "#f3f4f6"
+          : "transparent";
+        e.currentTarget.style.color = match ? "#0d9488" : "#374151";
       }}
     >
       {children}
@@ -53,6 +56,20 @@ const NavLink = ({
 };
 
 export default function Header() {
+  const { onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(true);
+  const navigate = useNavigate();
+
+  const opnen = () => {
+    setIsOpen(true);
+    onOpen();
+  };
+
+  const close = () => {
+    setIsOpen(false);
+    onClose();
+  };
+
   return (
     <Box
       bg="#d0cccc26"
@@ -64,13 +81,25 @@ export default function Header() {
       backdropFilter="blur(6.3px)"
     >
       <Flex h={16} alignItems="center" justifyContent="space-between">
-        <Text fontWeight="bold" fontSize="xl" color="teal.500">
+        <Text
+          fontWeight="bold"
+          fontSize="xl"
+          color="teal.500"
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+        >
           Shop Easy
         </Text>
 
-        <IconButton size="md" aria-label="Open Menu" display={{ md: "none" }} />
+        {/* Toggle Button */}
+        <IconButton
+          size="md"
+          aria-label="Toggle Menu"
+          display={{ md: "none" }}
+          onClick={() => (isOpen ? close() : opnen())}
+        />
 
-        {/* Desktop nav */}
+        {/* Desktop Navigation */}
         <HStack display={{ base: "none", md: "flex" }}>
           {Links.map((link) => (
             <NavLink key={link.to} to={link.to}>
@@ -80,16 +109,18 @@ export default function Header() {
         </HStack>
       </Flex>
 
-      {/* Mobile nav (optional toggle) */}
-      <Box pb={4} display={{ md: "none" }}>
-        <Stack as="nav">
-          {Links.map((link) => (
-            <NavLink key={link.to} to={link.to}>
-              {link.name}
-            </NavLink>
-          ))}
-        </Stack>
-      </Box>
+      {/* Mobile Navigation */}
+      {isOpen && (
+        <Box pb={4} display={{ md: "none" }}>
+          <Stack as="nav">
+            {Links.map((link) => (
+              <NavLink key={link.to} to={link.to}>
+                {link.name}
+              </NavLink>
+            ))}
+          </Stack>
+        </Box>
+      )}
     </Box>
   );
 }

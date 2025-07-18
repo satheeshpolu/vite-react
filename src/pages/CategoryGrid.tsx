@@ -1,10 +1,4 @@
-import {
-  Box,
-  Grid,
-  Text,
-  Icon,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Grid, Text, Icon, Flex } from "@chakra-ui/react";
 import { FaBoxOpen } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -36,14 +30,12 @@ const categories = [
 ];
 
 const formatCategory = (cat: string) =>
-  cat
-    .replace(/-/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+  cat.replace(/-/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 
 export default function CategoryGrid() {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
-  const cardBg = 'gray.100'; //useColorModeValue("gray.100", "gray.700");
+  const cardBg = "gray.100"; //useColorModeValue("gray.100", "gray.700");
 
   return (
     <Grid
@@ -65,8 +57,12 @@ export default function CategoryGrid() {
           p={4}
           textAlign="center"
           transition="all 0.2s"
-          _hover={{ transform: "scale(1.05)", cursor: "pointer" }}
-           onClick={() => navigate(`/cart/category/${category}`)}
+          _hover={{
+            transform: "scale(1.05)",
+            cursor: "pointer",
+            bg: "teal.200",
+          }}
+          onClick={() => navigate(`/category/${category}`)}
         >
           <Flex justify="center" mb={2}>
             <Icon as={FaBoxOpen} w={6} h={6} color="teal.400" />
