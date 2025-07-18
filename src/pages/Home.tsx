@@ -4,6 +4,7 @@ import UCard from "../components/UCard";
 import ArticleCard, { Article } from "../components/ArticleCard";
 import QuoteCard from "../components/QuoteCard ";
 import ScrollingAds from "../components/ScrollingAds";
+import UnderDevelopment from "@/components/UnderDevelopment";
 
 // Define allowed keys
 type MenuKey = "dashboard" | "profile" | "settings" | "news_app" | "quotes_app";
@@ -208,6 +209,7 @@ export default function Home() {
             <ArticleCard article={articleData}></ArticleCard>
           )}
         </Box>
+        <UnderDevelopment />
         <ScrollingAds />
       </Flex>
     </Flex>

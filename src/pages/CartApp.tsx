@@ -9,7 +9,7 @@ export default function CartApp() {
       <FullPageSections />
       <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
         <Drawer.Trigger asChild>
-          <Button variant="outline" size="sm">
+          <Button variant="outline" size="sm" style={{display: 'none'}}>
             Open Drawer
           </Button>
         </Drawer.Trigger>
