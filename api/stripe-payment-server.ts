@@ -1,8 +1,9 @@
+import 'dotenv/config';
 import fastify from 'fastify';
 import Stripe from 'stripe';
 import cors from '@fastify/cors';
 
-const stripe = new Stripe('sk_test_DUMMY', { apiVersion: '2026-01-28.clover' });
+const stripe = new Stripe(process.env.STRIPE_SK_TEST_KEY!, { apiVersion: '2026-01-28.clover' });
 
 const app = fastify({ logger: true });
 

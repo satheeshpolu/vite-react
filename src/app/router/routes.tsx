@@ -4,7 +4,7 @@ import { LoadingFallback } from './LoadingFallback';
 import Home from '@/pages/Home';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import CONSTANTS from '@/utils/constants';
+import { env } from '../config';
 
 // import CheckoutScreen from '@/pages/CheckoutScreen';
 
@@ -19,7 +19,7 @@ const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
 const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
-const stripePromise = loadStripe(CONSTANTS.STRIPE.PUBLISHABLE_KEY);
+const stripePromise = loadStripe(env.STRIPE.PUBLISHABLE_KEY);
 
 export function AppRoutes() {
   return (
