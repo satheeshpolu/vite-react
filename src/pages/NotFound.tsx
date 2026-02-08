@@ -2,7 +2,7 @@
 import { Button, Center, Heading, Text, VStack } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-export default function NoFound() {
+export default function NotFound() {
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -10,7 +10,7 @@ export default function NoFound() {
   };
 
   return (
-    <Center minH="100vh" bg="gray.50" px={4}>
+    <Center minH="85vh" bg="gray.50" px={4}>
       <VStack>
         <Heading size="4xl" color="gray.300">
           404 - Page Not Found

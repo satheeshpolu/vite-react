@@ -12,7 +12,7 @@ const CheckoutScreen = lazy(() => import('@/pages/CheckoutScreen'));
 const ProductsOverview = lazy(() => import('@/pages/ProductsOverview'));
 const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
 const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
-const NoFound = lazy(() => import('@/pages/NoFound'));
+const NotFound = lazy(() => import('@/pages/NotFound'));
 
 export function AppRoutes() {
   return (
@@ -32,7 +32,7 @@ export function AppRoutes() {
           <Route path="cart/checkout" element={<CheckoutScreen />} />
           <Route path="category/:category" element={<ProductsOverview />} />
           <Route path="category/:category/:id/product_details" element={<ProductDetails />} />
-          <Route path="*" element={<NoFound />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </Suspense>
