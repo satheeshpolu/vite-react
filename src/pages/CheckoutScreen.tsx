@@ -4,6 +4,28 @@ import { useLocation } from 'react-router-dom';
 import { Field, defineStyle } from '@chakra-ui/react';
 import UnderDevelopment from '../components/UnderDevelopment';
 import { BackButton } from '@/components/shared';
+import { StripePaymentForm } from '@/features/payments/stripe/components/StripePaymentForm';
+
+const floatingStyles = defineStyle({
+  pos: 'absolute',
+  bg: 'bg',
+  px: '0.5',
+  top: '-3',
+  insetStart: '2',
+  fontWeight: 'normal',
+  pointerEvents: 'none',
+  transition: 'position',
+  _peerPlaceholderShown: {
+    color: 'fg.muted',
+    top: '2.5',
+    insetStart: '3',
+  },
+  _peerFocusVisible: {
+    color: 'fg',
+    top: '-3',
+    insetStart: '2',
+  },
+});
 const CheckoutScreen = () => {
   const location = useLocation();
   const { amount } = location.state || {};
@@ -26,8 +48,10 @@ const CheckoutScreen = () => {
   return (
     <Flex minH="100vh" align="flex-start" justify="center" bg="gray.100" pt={24} px={4}>
       <Box maxW="500px" w="full" bg="white" p={8} rounded="md" shadow="md">
-        <UnderDevelopment />
-        <Heading size="md" mb={4} textAlign="center">
+        {/* <UnderDevelopment /> */}
+        <BackButton />
+
+        <Heading size="lg" mb={8} textAlign="center">
           Order Summary
         </Heading>
 
@@ -85,7 +109,7 @@ const CheckoutScreen = () => {
             </Box>
           </Field.Root>
 
-          <Button
+          {/* <Button
             mt={4}
             width="full"
             color="#c9f9f4"
@@ -94,33 +118,12 @@ const CheckoutScreen = () => {
             bg="#14b8a6"
           >
             Place Order
-          </Button>
-          <BackButton />
+          </Button> */}
+          <StripePaymentForm />
         </Stack>
       </Box>
     </Flex>
   );
 };
-
-const floatingStyles = defineStyle({
-  pos: 'absolute',
-  bg: 'bg',
-  px: '0.5',
-  top: '-3',
-  insetStart: '2',
-  fontWeight: 'normal',
-  pointerEvents: 'none',
-  transition: 'position',
-  _peerPlaceholderShown: {
-    color: 'fg.muted',
-    top: '2.5',
-    insetStart: '3',
-  },
-  _peerFocusVisible: {
-    color: 'fg',
-    top: '-3',
-    insetStart: '2',
-  },
-});
 
 export default CheckoutScreen;
