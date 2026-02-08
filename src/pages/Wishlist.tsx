@@ -2,11 +2,11 @@ import { Box, Grid, Image, Text, Heading, VStack, Stack, Flex } from '@chakra-ui
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import useProductStore from '@/stores/useProductStore';
-import { BackButton, ProductCardHeader } from '@/components/shared';
-import { ProductCardFooter } from '@/components/shared/product/ProductCardFooter';
+import { BackButton } from '@/components/shared';
 import { useTranslation } from 'react-i18next';
 import { EmptyState } from '@/components/shared/empty/EmptyState';
 import { Product } from '@/utils/types';
+import ProductCard from '@/components/ProductCard';
 
 export default function Wishlist() {
   const { category } = useParams();
@@ -55,45 +55,7 @@ export default function Wishlist() {
         gap={6}
       >
         {favoriteProducts.map((product: Product) => (
-          <Box
-            key={product?.id}
-            borderRadius="lg"
-            overflow="hidden"
-            bg="#8ef1e4"
-            borderColor={borderColor}
-            shadow="md"
-            _hover={{ transform: 'scale(1.02)', transition: '0.2s' }}
-          >
-            <ProductCardHeader product={product} />
-            <Image
-              src={product?.thumbnail}
-              alt={product?.title}
-              objectFit="scale-down"
-              w="100%"
-              h="120px"
-              _hover={{
-                transform: 'scale(1.5)',
-                transition: '0.5s',
-                zIndex: -1,
-              }}
-            />
-
-            <Box p={4}>
-              <VStack>
-                <Heading fontSize="lg" whiteSpace="nowrap" overflow="hidden">
-                  {product.title}
-                </Heading>
-
-                <Box height={150}>
-                  <Text fontSize="sm" color="gray.600">
-                    {product.description}
-                  </Text>
-                </Box>
-
-                <ProductCardFooter product={product} />
-              </VStack>
-            </Box>
-          </Box>
+          <ProductCard key={product?.id} product={product} />
         ))}
       </Grid>
     </Box>
