@@ -3,13 +3,14 @@ import { useState } from 'react';
 import { Box, Stack } from '@chakra-ui/react';
 import { StripeCheckoutButton } from './StripeCheckoutButton';
 import { env } from '@/app/config';
+import { toaster } from '@/components/ui/toaster';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
       fontSize: '16px',
       color: '#32325d',
-      '::placeholder': { color: '#14b8a6' },
+      '::placeholder': { color: '#12a493' },
       fontFamily: 'inherit',
       padding: '12px 16px',
     },
@@ -24,8 +25,12 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
-
+  const [cardComplete, setCardComplete] = useState(false);
+  const handleCardChange = (event: any) => {
+    setCardComplete(event.complete);
+  };
   const handleSubmit = async (e: React.FormEvent) => {
+    debugger;
     e.preventDefault();
     setPaymentProcessing(true);
     if (!stripe || !elements) return;
@@ -42,9 +47,17 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
     });
 
     if (result.error) {
-      alert(result.error.message);
+      toaster.create({
+        title: 'Payment not been processed.',
+        description: `Your payment of $${amount.toFixed(2)} has not been processed.`,
+        type: 'warning',
+      });
     } else if (result.paymentIntent?.status === 'succeeded') {
-      alert('Payment successful!');
+      toaster.create({
+        title: 'Payment successful',
+        description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
+        type: 'success',
+      });
     }
     setPaymentProcessing(false);
   };
@@ -58,16 +71,18 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
         }}
       >
         <Stack gap={4}>
-          <CardElement options={CARD_ELEMENT_OPTIONS} />
+          <CardElement options={CARD_ELEMENT_OPTIONS} onChange={handleCardChange} />
           <StripeCheckoutButton
             onClick={() => {
               // Manually trigger form submission
               const form = document.querySelector('form');
+              debugger;
               if (form) {
                 form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
               }
             }}
             loading={paymentProcessing}
+            disabled={!stripe || !cardComplete || paymentProcessing}
           />
         </Stack>
       </form>
