@@ -13,10 +13,12 @@ const Layout = lazy(() => import('@/pages/Layout'));
 const Contact = lazy(() => import('@/pages/Contact'));
 const Wishlist = lazy(() => import('@/pages/Wishlist'));
 const CartOverview = lazy(() => import('@/pages/CartOverview'));
-const CheckoutSummary = lazy(() => import('@/pages/CheckoutSummary'));
 const ProductsOverview = lazy(() => import('@/pages/ProductsOverview'));
 const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
 const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
+const CheckoutSummary = lazy(() => import('@/pages/CheckoutSummary'));
+const Orders = lazy(() => import('@/pages/Orders'));
+
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const stripePromise = loadStripe(env.STRIPE.PUBLISHABLE_KEY);
@@ -37,9 +39,10 @@ export function AppRoutes() {
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="recent_products" element={<RecentProducts />} />
             <Route path="cart" element={<CartOverview />} />
-            <Route path="cart/checkout" element={<CheckoutSummary />} />
             <Route path="category/:category" element={<ProductsOverview />} />
             <Route path="category/:category/:id/product_details" element={<ProductDetails />} />
+            <Route path="cart/checkout" element={<CheckoutSummary />} />
+            <Route path="orders" element={<Orders />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

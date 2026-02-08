@@ -4,6 +4,7 @@ import { Box, Stack } from '@chakra-ui/react';
 import { StripeCheckoutButton } from './StripeCheckoutButton';
 import { env } from '@/app/config';
 import { toaster } from '@/components/ui/toaster';
+import { useNavigate } from 'react-router-dom';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -26,6 +27,7 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const elements = useElements();
   const [paymentProcessing, setPaymentProcessing] = useState(false);
   const [cardComplete, setCardComplete] = useState(false);
+  const navigate = useNavigate();
   const handleCardChange = (event: any) => {
     setCardComplete(event.complete);
   };
@@ -58,6 +60,7 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
         description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
         type: 'success',
       });
+      navigate('/orders', { state: { amount, orderId: result.paymentIntent.id } });
     }
     setPaymentProcessing(false);
   };

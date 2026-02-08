@@ -12,6 +12,7 @@ const Links = [
   { name: t('app.navigation.contact'), to: '/contact' },
   { name: t('app.navigation.wishlist'), to: '/wishlist' },
   { name: t('app.navigation.recentlyViewed'), to: '/recent_products' },
+  { name: t('app.navigation.orders'), to: '/orders' },
   { name: t('app.navigation.cart'), to: '/cart' },
 ];
 
