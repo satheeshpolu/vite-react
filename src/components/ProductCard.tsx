@@ -3,20 +3,29 @@ import useProductStore from '@/stores/useProductStore';
 import { Product } from '@/utils/types';
 import { Text } from '@chakra-ui/react';
 import { Box, Image, Heading, VStack } from '@chakra-ui/react';
-import { FaShare } from 'react-icons/fa';
-import { FaHeart, FaRegHeart } from 'react-icons/fa6';
 import { ProductCardFooter } from './shared/product/ProductCardFooter';
 import { ProductCardHeader } from './shared/product/ProductCardHeader';
+
+const cardStyles = {
+  borderRadius: 'lg',
+  overflow: 'hidden',
+  bg: '#8ef1e4',
+  shadow: 'md',
+  borderColor: 'gray.700',
+  _hover: {
+    transform: 'scale(1.02)',
+    transition: '0.2s',
+    borderColor: 'rgb(32, 134, 125)',
+    borderWidth: '1px',
+  },
+};
 
 type ProductCardProps = {
   product: Product;
 };
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { shareProduct } = useShareProduct();
-  const { toggleFavorite } = useProductStore();
-
   return (
-    <>
+    <Box {...cardStyles}>
       <ProductCardHeader product={product} />
       <Image
         src={product?.thumbnail}
@@ -45,7 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <ProductCardFooter product={product} />
         </VStack>
       </Box>
-    </>
+    </Box>
   );
 };
 

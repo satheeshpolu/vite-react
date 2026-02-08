@@ -5,6 +5,7 @@ import { FaArrowCircleDown, FaArrowCircleUp, FaOpencart } from 'react-icons/fa';
 import useCartStore from '@/stores/useCartStore';
 import { useTranslation } from 'react-i18next';
 import { t } from 'i18next';
+import { NavLink } from '@/shared/NavLink';
 
 const Links = [
   { name: t('app.navigation.home'), to: '/' },
@@ -13,36 +14,6 @@ const Links = [
   { name: t('app.navigation.recentlyViewed'), to: '/recent_products' },
   { name: t('app.navigation.cart'), to: '/cart' },
 ];
-
-const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => {
-  const match = useMatch(to);
-
-  return (
-    <RouterLink
-      to={to}
-      style={{
-        padding: '0.5rem 0.75rem',
-        borderRadius: '0.375rem',
-        fontWeight: match ? 'bold' : 'normal',
-        color: match ? '#0d9488' : '#0d9488',
-        backgroundColor: match ? '#f3f4f6' : 'transparent',
-        textDecoration: 'none',
-        display: 'block',
-        transition: 'all 0.2s',
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#e5e7eb';
-        e.currentTarget.style.color = '#0d9488';
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = match ? '#f3f4f6' : 'transparent';
-        e.currentTarget.style.color = match ? '#0d9488' : '#374151';
-      }}
-    >
-      {children}
-    </RouterLink>
-  );
-};
 
 // Separate component for cart badge to use hooks properly
 const CartBadge = () => {
@@ -118,17 +89,17 @@ export default function Header() {
         <HStack display={{ base: 'none', md: 'flex' }}>
           {Links.map((link) => {
             const isCart = link.name === 'Cart';
-
             return (
-              <NavLink key={link.to} to={link.to}>
-                <Flex align="center" gap={2} position="relative">
-                  {isCart && <CartBadge />}
-                  <Text>{link.name}</Text>
-                </Flex>
+              <NavLink
+                key={link.to}
+                to={link.to}
+                isCart={isCart}
+                CartBadge={isCart ? <CartBadge /> : null}
+              >
+                {link.name}
               </NavLink>
             );
           })}
-          {/* <LanguageSwitcher /> */}
         </HStack>
       </Flex>
 

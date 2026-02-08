@@ -10,7 +10,21 @@ import { BackButton } from '@/components/shared';
 import { Product } from '@/utils/types';
 import ProductCard from '@/components/ProductCard';
 
-export default function CategoryProducts() {
+const cardStyles = {
+  borderRadius: 'lg',
+  overflow: 'hidden',
+  bg: '#8ef1e4',
+  shadow: 'md',
+  borderColor: 'gray.700',
+  _hover: {
+    transform: 'scale(1.02)',
+    transition: '0.2s',
+    borderColor: 'rgb(32, 134, 125)',
+    borderWidth: '1px',
+  },
+};
+
+export default function ProductsOverview() {
   const { category } = useParams();
 
   const { products, fetchProducts, sortProducts } = useProductStore();
@@ -27,12 +41,12 @@ export default function CategoryProducts() {
   return (
     <Box p={6}>
       <Flex justify="flex-end" mt={4} mr={4} gap={8}>
-        <BackButton />
         <SortDropdown
           onFilterChange={(value) => {
             sortProducts(value);
           }}
         />
+        <BackButton />
       </Flex>
 
       <Heading size="lg" mb={6}>
@@ -48,18 +62,10 @@ export default function CategoryProducts() {
         }}
         gap={6}
       >
-        {products.map((product: Product) => (
-          <Box
-            key={product?.id}
-            borderRadius="lg"
-            overflow="hidden"
-            bg="#8ef1e4"
-            borderColor={borderColor}
-            shadow="md"
-            _hover={{ transform: 'scale(1.02)', transition: '0.2s' }}
-          >
-            <ProductCard product={product} />
-          </Box>
+        {products?.map((product: Product) => (
+          // <Box key={product?.id} {...cardStyles}>
+          <ProductCard product={product} key={product?.id} />
+          // </Box>
         ))}
       </Grid>
     </Box>

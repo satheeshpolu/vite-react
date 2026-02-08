@@ -9,7 +9,7 @@ const Contact = lazy(() => import('@/pages/Contact'));
 const Wishlist = lazy(() => import('@/pages/Wishlist'));
 const CartOverview = lazy(() => import('@/pages/CartOverview'));
 const CheckoutScreen = lazy(() => import('@/pages/CheckoutScreen'));
-const CategoryProducts = lazy(() => import('@/pages/CategoryProducts'));
+const ProductsOverview = lazy(() => import('@/pages/ProductsOverview'));
 const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
 const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
 const NoFound = lazy(() => import('@/pages/NoFound'));
@@ -30,7 +30,7 @@ export function AppRoutes() {
           <Route path="recent_products" element={<RecentProducts />} />
           <Route path="cart" element={<CartOverview />} />
           <Route path="cart/checkout" element={<CheckoutScreen />} />
-          <Route path="category/:category" element={<CategoryProducts />} />
+          <Route path="category/:category" element={<ProductsOverview />} />
           <Route path="category/:category/:id/product_details" element={<ProductDetails />} />
           <Route path="*" element={<NoFound />} />
         </Route>
