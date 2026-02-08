@@ -29,7 +29,7 @@ const floatingStyles = defineStyle({
 const CheckoutScreen = () => {
   const location = useLocation();
   const { amount } = location.state || {};
-
+  // console.log('Checkout Amount:', amount);
   // State for each address field
   const [fullName, setFullName] = useState('');
   const [streetAddress, setStreetAddress] = useState('');
@@ -119,7 +119,7 @@ const CheckoutScreen = () => {
           >
             Place Order
           </Button> */}
-          <StripePaymentForm />
+          <StripePaymentForm amount={amount} />
         </Stack>
       </Box>
     </Flex>

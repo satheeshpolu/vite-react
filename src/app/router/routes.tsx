@@ -4,6 +4,8 @@ import { LoadingFallback } from './LoadingFallback';
 import Home from '@/pages/Home';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import CONSTANTS from '@/utils/constants';
+
 // import CheckoutScreen from '@/pages/CheckoutScreen';
 
 // Lazy load all route components
@@ -17,9 +19,7 @@ const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
 const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
-const stripePromise = loadStripe(
-  'pk_test_51SxVD1LcAJPF47dSIH5L5vi7E0sCq1K6IXm6icBMuvlui03tITLzfJbuHJQMMmFS3jGzEZ1fLAa74HkHVCh7NSOW00nZhj2rKl'
-);
+const stripePromise = loadStripe(CONSTANTS.STRIPE.PUBLISHABLE_KEY);
 
 export function AppRoutes() {
   return (

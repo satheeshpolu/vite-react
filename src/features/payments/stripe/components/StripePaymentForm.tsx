@@ -2,6 +2,8 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import { Box, Stack } from '@chakra-ui/react';
 import { StripeCheckoutButton } from './StripeCheckoutButton';
+import { env } from '@/app/config';
+
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
@@ -15,7 +17,10 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-export const StripePaymentForm = () => {
+type StripePaymentFormProps = {
+  amount: number;
+};
+export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -25,10 +30,12 @@ export const StripePaymentForm = () => {
     setLoading(true);
 
     if (!stripe || !elements) return;
-
-    // Dummy client secret for test, replace with real one from backend
-    const clientSecret = 'sk_test_dummy_secret'; //TODO
-
+    const res = await fetch(`${env.STRIPE.API_BASE_URL}/create-payment-intent`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: Math.round(amount * 100), currency: 'usd' }),
+    });
+    const { clientSecret } = await res.json();
     const result = await stripe.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements.getElement(CardElement)!,
@@ -63,6 +70,12 @@ export const StripePaymentForm = () => {
             }}
             loading={loading}
           />
+          {/* <form onSubmit={handleSubmit}>
+            <CardElement />
+            <button type="submit" disabled={!stripe || loading}>
+              {loading ? 'Processing…' : 'Pay $19.99'}
+            </button>
+          </form> */}
         </Stack>
       </form>
     </Box>
