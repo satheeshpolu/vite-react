@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Heading, Box, Button, Flex, Stack, Text, Input } from '@chakra-ui/react';
+import { Heading, Box, Flex, Stack, Text, Input, HStack } from '@chakra-ui/react';
 import { useLocation } from 'react-router-dom';
 import { Field, defineStyle } from '@chakra-ui/react';
-import UnderDevelopment from '../components/UnderDevelopment';
 import { BackButton } from '@/components/shared';
 import { StripePaymentForm } from '@/features/payments/stripe/components/StripePaymentForm';
+import { Separator } from '@chakra-ui/react';
 
 const floatingStyles = defineStyle({
   pos: 'absolute',
@@ -26,7 +26,7 @@ const floatingStyles = defineStyle({
     insetStart: '2',
   },
 });
-const CheckoutScreen = () => {
+const CheckoutSummary = () => {
   const location = useLocation();
   const { amount } = location.state || {};
   // console.log('Checkout Amount:', amount);
@@ -37,30 +37,24 @@ const CheckoutScreen = () => {
   const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('');
 
-  // Check if all fields have some value
-  // const isFormValid =
-  //   fullName.trim() &&
-  //   streetAddress.trim() &&
-  //   city.trim() &&
-  //   postalCode.trim() &&
-  //   country.trim();
-
   return (
-    <Flex minH="100vh" align="flex-start" justify="center" bg="gray.100" pt={24} px={4}>
+    <Flex minH="90vh" align="flex-start" justify="center" bg="gray.100" pt={16} px={4}>
       <Box maxW="500px" w="full" bg="white" p={8} rounded="md" shadow="md">
-        {/* <UnderDevelopment /> */}
-        <BackButton />
+        <HStack mb={6}>
+          <BackButton />
+          <Heading size="xl" textAlign="center" flex="1">
+            Checkout Summary
+          </Heading>
+        </HStack>
+        <HStack mb={2}>
+          <Separator flex="1" variant="dashed" />
+          <Heading size="lg" textAlign="center">
+            Shipping Info
+          </Heading>
 
-        <Heading size="lg" mb={8} textAlign="center">
-          Order Summary
-        </Heading>
-
+          <Separator flex="1" variant="dashed" />
+        </HStack>
         <Stack>
-          <Flex justify="space-between" fontWeight="bold" mb={4} color={'teal.500'}>
-            <Text>Total:</Text>
-            <Text>${amount?.toFixed(2) || 0}</Text>
-          </Flex>
-
           <Field.Root>
             <Box pos="relative" w="full">
               <Input
@@ -108,17 +102,18 @@ const CheckoutScreen = () => {
               <Field.Label css={floatingStyles}>Country</Field.Label>
             </Box>
           </Field.Root>
+          <HStack>
+            <Separator flex="1" variant="dashed" />
+            <Heading size="lg" textAlign="center">
+              Payment Info
+            </Heading>
 
-          {/* <Button
-            mt={4}
-            width="full"
-            color="#c9f9f4"
-            variant="outline"
-            onClick={() => alert('Under development...!')}
-            bg="#14b8a6"
-          >
-            Place Order
-          </Button> */}
+            <Separator flex="1" variant="dashed" />
+          </HStack>
+          <Flex justify="space-between" fontWeight="bold" mb={4} color={'teal.500'}>
+            <Text>Total:</Text>
+            <Text color={'red.500'}>${amount?.toFixed(2) || 0}</Text>
+          </Flex>
           <StripePaymentForm amount={amount} />
         </Stack>
       </Box>
@@ -126,4 +121,4 @@ const CheckoutScreen = () => {
   );
 };
 
-export default CheckoutScreen;
+export default CheckoutSummary;

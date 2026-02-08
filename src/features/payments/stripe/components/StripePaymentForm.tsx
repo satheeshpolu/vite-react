@@ -23,12 +23,11 @@ type StripePaymentFormProps = {
 export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [loading, setLoading] = useState(false);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
+    setPaymentProcessing(true);
     if (!stripe || !elements) return;
     const res = await fetch(`${env.STRIPE.API_BASE_URL}/create-payment-intent`, {
       method: 'POST',
@@ -47,7 +46,7 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
     } else if (result.paymentIntent?.status === 'succeeded') {
       alert('Payment successful!');
     }
-    setLoading(false);
+    setPaymentProcessing(false);
   };
 
   return (
@@ -68,14 +67,8 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
                 form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
               }
             }}
-            loading={loading}
+            loading={paymentProcessing}
           />
-          {/* <form onSubmit={handleSubmit}>
-            <CardElement />
-            <button type="submit" disabled={!stripe || loading}>
-              {loading ? 'Processing…' : 'Pay $19.99'}
-            </button>
-          </form> */}
         </Stack>
       </form>
     </Box>
