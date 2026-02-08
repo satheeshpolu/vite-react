@@ -35,7 +35,7 @@ const CartOverview = () => {
     <>
       <Flex justify="flex-end" mt={4} mr={4} gap={8}>
         {!isCartEmpty && (
-          <>
+          <HStack>
             <Button
               variant="outline"
               bg="#14b8a6"
@@ -65,7 +65,7 @@ const CartOverview = () => {
               {t('cart.checkOut')}
             </Button>
             <BackButton />
-          </>
+          </HStack>
         )}
       </Flex>
       <Flex style={{ margin: '30px' }}>

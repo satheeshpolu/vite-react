@@ -23,7 +23,7 @@ export const useShareProduct = () => {
         await navigator.share(shareData);
       } else {
         // Fallback: copy to clipboard
-        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+        await navigator.clipboard.writeText(`${shareData.url}`);
         toaster.create({
           title: 'Link copied!',
           description: 'Product link copied to clipboard',
