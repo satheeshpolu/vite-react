@@ -69,15 +69,15 @@ From browsing products to managing your wishlist and cart, the app provides a sm
 - 💖 **Wishlist Page** — Save favorite products for later with one click  
   ![alt text](/src/assets/image-3.png)
 
-- Recently Viewed -
+- **Recently Viewed** -
   ![alt text](/src/assets/image-6.png)
 
-- Order Confirmation
+- **Order Confirmation** -
   ![alt text](/src/assets/image-7.png)
 - 🛒 **Cart Page** — Smooth checkout flow with all your selected items  
   ![alt text](/src/assets/image-8.png)
 
-- Checkout with Stripe
+- **Checkout with Stripe** -
   ![alt text](/src/assets/image-9.png)
 
 ## 📦 Getting Started
