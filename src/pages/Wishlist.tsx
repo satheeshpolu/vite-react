@@ -41,7 +41,7 @@ export default function Wishlist() {
       </Flex>
 
       <Heading size="lg" mb={6}>
-        {favoriteProducts ? t('contact.title') : `Category: {category}`}
+        {favoriteProducts ? t('wishlist.title') : `Category: {category}`}
       </Heading>
 
       {isEmpty && <EmptyState type={'wishlist'} />}
