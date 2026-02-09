@@ -7,20 +7,21 @@
       "contact": "Contact",
       "wishlist": "Wishlist",
       "recentlyViewed": "Recently Viewed",
-      "cart": "Cart"
+      "cart": "Cart",
+      "orders": "Orders"
     }
   },
   "cart": {
     "title": "Your Cart",
     "empty": "Your cart is empty",
-    "clearCart": "Clear ",
+    "clearCart": "Clear Cart",
     "checkOut": "Check Out",
     "details": {
       "header": "Product(s)",
       "title": "Title",
       "quantity": "Quantity",
       "total": "Total",
-      "discount": "Discounted Price"      
+      "discount": "Discounted Price"
     }
   },
   "contact": {

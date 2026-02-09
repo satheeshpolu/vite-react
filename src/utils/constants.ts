@@ -6,6 +6,10 @@ const CONSTANTS = {
   API: {
     BASE_URL: env.API_BASE_URL,
   },
+  STRIPE: {
+    PUBLISHABLE_KEY: env.STRIPE.PUBLISHABLE_KEY,
+    BASE_URL: env.STRIPE.API_BASE_URL,
+  },
 };
 
 export default CONSTANTS;
