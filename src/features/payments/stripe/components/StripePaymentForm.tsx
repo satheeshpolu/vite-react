@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Box, Stack } from '@chakra-ui/react';
 import { StripeCheckoutButton } from './StripeCheckoutButton';
 import { env } from '@/app/config';
-import { toaster } from '@/components/ui/toaster';
 import { useNavigate } from 'react-router-dom';
 import useCartStore from '@/stores/useCartStore';
+import { useToaster } from '@/shared/hooks/useToaster';
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -30,43 +30,66 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const [cardComplete, setCardComplete] = useState(false);
   const navigate = useNavigate();
   const clearCart = useCartStore((state) => state.clearCart);
+  const { showToast } = useToaster();
 
   const handleCardChange = (event: any) => {
     setCardComplete(event.complete);
   };
+
+  const getPaymentIntentURL = () => {
+    if (env.IS_DEV) {
+      return `${env.STRIPE.API_BASE_URL}/create-payment-intent`;
+    }
+    return '/api/create-payment-intent';
+  };
+
+  const showSuccessToast = () => {
+    showToast(
+      'Payment successful',
+      `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
+      'success'
+    );
+  };
+
+  const showFailureToast = () => {
+    showToast(
+      'Payment not been processed.',
+      `Your payment of $${amount.toFixed(2)} has not been processed.`,
+      'warning'
+    );
+  };
+
+  const showErrorToast = (message: string) => {
+    showToast('Payment error', message, 'error');
+  };
   const handleSubmit = async (e: React.FormEvent) => {
-    debugger;
     e.preventDefault();
     setPaymentProcessing(true);
-    if (!stripe || !elements) return;
-    const res = await fetch(`${env.STRIPE.API_BASE_URL}/create-payment-intent`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ amount: Math.round(amount * 100), currency: 'usd' }),
-    });
-    const { clientSecret } = await res.json();
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement)!,
-      },
-    });
-
-    if (result.error) {
-      toaster.create({
-        title: 'Payment not been processed.',
-        description: `Your payment of $${amount.toFixed(2)} has not been processed.`,
-        type: 'warning',
+    try {
+      if (!stripe || !elements) return;
+      const res = await fetch(getPaymentIntentURL(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: Math.round(amount * 100), currency: 'usd' }),
       });
-    } else if (result.paymentIntent?.status === 'succeeded') {
-      toaster.create({
-        title: 'Payment successful',
-        description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
-        type: 'success',
+      const { clientSecret } = await res.json();
+      const result = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement)!,
+        },
       });
-      clearCart();
-      navigate('/orders', { state: { amount, orderId: result.paymentIntent.id } });
+      if (result.error) {
+        showFailureToast();
+      } else if (result.paymentIntent?.status === 'succeeded') {
+        showSuccessToast();
+        clearCart();
+        navigate('/orders', { state: { amount, orderId: result.paymentIntent.id } });
+      }
+    } catch (error: any) {
+      showErrorToast('Please contact the author for more details.');
+    } finally {
+      setPaymentProcessing(false);
     }
-    setPaymentProcessing(false);
   };
 
   return (
@@ -83,7 +106,6 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
             onClick={() => {
               // Manually trigger form submission
               const form = document.querySelector('form');
-              debugger;
               if (form) {
                 form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
               }

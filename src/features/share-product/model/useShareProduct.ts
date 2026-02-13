@@ -1,7 +1,10 @@
 import { Product } from '@/entities/product';
 import { toaster } from '@/components/ui/toaster';
+import { useToaster } from '@/shared/hooks/useToaster';
 
 export const useShareProduct = () => {
+  const { showToast } = useToaster();
+
   const shareProduct = async (product: Product) => {
     const { id } = product;
     const baseUrl = window.location.origin;
@@ -22,21 +25,12 @@ export const useShareProduct = () => {
       if (navigator.share && navigator.canShare(shareData)) {
         await navigator.share(shareData);
       } else {
-        // Fallback: copy to clipboard
         await navigator.clipboard.writeText(`${shareData.url}`);
-        toaster.create({
-          title: 'Link copied!',
-          description: 'Product link copied to clipboard',
-          type: 'success',
-        });
+        showToast('Link copied!', 'Product link copied to clipboard', 'success');
       }
     } catch (error) {
       if ((error as Error).name !== 'AbortError') {
-        // toaster.create({
-        //   title: 'Share failed',
-        //   description: 'Could not share the product',
-        //   type: 'error',
-        // });
+        showToast('Share failed', 'Could not share the product', 'error');
       }
     }
   };
