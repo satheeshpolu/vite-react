@@ -12,5 +12,4 @@ const BackButtonComponent = () => {
   );
 };
 
-// Important: don't provide paranthisis[BackButtonComponent()] at the end
 export const BackButton = memo(BackButtonComponent);

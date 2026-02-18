@@ -12,9 +12,7 @@ import { Product } from '@/utils/types';
 export default function RecentProducts() {
   const { category } = useParams();
   const navigate = useNavigate();
-  // const addToCart = useCartStore(
-  //   (state: { addToCart: any }) => state.addToCart,
-  // );
+
   const borderColor = 'gray.700';
   const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(true);
@@ -36,13 +34,6 @@ export default function RecentProducts() {
     <Box p={6}>
       <Flex justify="flex-end" mt={4} mr={4} gap={8}>
         <BackButton />
-        {/* <Button
-          onClick={() => navigate(-1)}
-          colorScheme="teal"
-          variant="outline"
-        >
-          ← Back
-        </Button> */}
       </Flex>
 
       <Heading size="lg" mb={6}>

@@ -1,10 +1,12 @@
 import { Box, Flex, Heading, VStack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
+import { BackButton } from '../navigation/BackButton';
 
 type EmptyStateProps = {
   type: string;
+  showBackButton?: boolean;
 };
-export function EmptyState({ type }: EmptyStateProps) {
+export function EmptyState({ type, showBackButton = false }: EmptyStateProps) {
   const { t } = useTranslation();
 
   return (
@@ -23,6 +25,7 @@ export function EmptyState({ type }: EmptyStateProps) {
           <Text fontSize={{ base: 'md', md: 'lg' }} maxW="md">
             {t(`${type}.emptyState.description`)}
           </Text>
+          {showBackButton && <BackButton />}
         </VStack>
       </Box>
     </Flex>
