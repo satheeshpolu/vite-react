@@ -22,6 +22,10 @@
       "quantity": "Quantity",
       "total": "Total",
       "discount": "Discounted Price"
+    },
+    "emptyState": {
+      "title": "Your cart is empty",
+      "description": "- Please add items to your cart"
     }
   },
   "contact": {
