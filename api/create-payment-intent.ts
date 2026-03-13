@@ -20,7 +20,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       automatic_payment_methods: { enabled: true },
     });
     res.status(200).json({ clientSecret: paymentIntent.client_secret });
-  } catch (err: any) {
-    res.status(500).json({ error: err.message });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Payment failed';
+    res.status(500).json({ error: message });
   }
 }
