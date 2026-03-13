@@ -1,5 +1,7 @@
 # 🛒 Shop Easy — Fast, Modern E-Commerce App
 
+![CI](https://github.com/satheeshpolu/shop-easy-sp/actions/workflows/ci.yml/badge.svg)
+
 Shop Easy is a blazing-fast and modern e-commerce web application built with the latest front-end technologies. It delivers a **smooth shopping experience**, **scalable architecture**, and a **clean, modern UI**. Powered by [Vite](https://vitejs.dev/) for lightning-fast builds and deployed seamlessly on [Vercel](https://vercel.com/), Shop Easy ensures effortless performance with zero downtime.
 
 - 🚀 **Live Demo**: [Shop Easy](https://satheeshpolu.vercel.app/)
