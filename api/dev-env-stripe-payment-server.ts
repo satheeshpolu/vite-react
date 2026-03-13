@@ -1,7 +1,13 @@
-import 'dotenv/config';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import fastify from 'fastify';
 import Stripe from 'stripe';
 import cors from '@fastify/cors';
+
+// Load .env from project root (ESM compatible)
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 const stripe = new Stripe(process.env.STRIPE_SK_TEST_KEY!, { apiVersion: '2026-01-28.clover' });
 
@@ -18,8 +24,9 @@ app.post('/create-payment-intent', async (request, reply) => {
       automatic_payment_methods: { enabled: true },
     });
     reply.send({ clientSecret: paymentIntent.client_secret });
-  } catch (err: any) {
-    reply.status(500).send({ error: err.message });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Payment failed';
+    reply.status(500).send({ error: message });
   }
 });
 

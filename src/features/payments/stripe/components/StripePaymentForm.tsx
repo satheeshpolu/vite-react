@@ -1,4 +1,5 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import type { StripeCardElementChangeEvent } from '@stripe/stripe-js';
 import { useState } from 'react';
 import { Box, Stack } from '@chakra-ui/react';
 import { StripeCheckoutButton } from './StripeCheckoutButton';
@@ -32,7 +33,7 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
   const clearCart = useCartStore((state) => state.clearCart);
   const { showToast } = useToaster();
 
-  const handleCardChange = (event: any) => {
+  const handleCardChange = (event: StripeCardElementChangeEvent) => {
     setCardComplete(event.complete);
   };
 
@@ -85,7 +86,7 @@ export const StripePaymentForm = ({ amount }: StripePaymentFormProps) => {
         clearCart();
         navigate('/orders', { state: { amount, orderId: result.paymentIntent.id } });
       }
-    } catch (error: any) {
+    } catch {
       showErrorToast('Please contact the author for more details.');
     } finally {
       setPaymentProcessing(false);

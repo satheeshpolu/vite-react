@@ -1,7 +1,7 @@
-import { Accordion, Box, Heading, HStack, Input, Separator, Span } from '@chakra-ui/react';
+import { Accordion, Box, Input, Span } from '@chakra-ui/react';
 import { Field, defineStyle } from '@chakra-ui/react';
 import React from 'react';
-import { FaShare, FaShuttleVan } from 'react-icons/fa';
+import { FaShuttleVan } from 'react-icons/fa';
 
 const floatingStyles = defineStyle({
   pos: 'absolute',

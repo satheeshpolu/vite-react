@@ -10,20 +10,6 @@ import { BackButton } from '@/components/shared';
 import { Product } from '@/utils/types';
 import ProductCard from '@/components/ProductCard';
 
-const cardStyles = {
-  borderRadius: 'lg',
-  overflow: 'hidden',
-  bg: '#8ef1e4',
-  shadow: 'md',
-  borderColor: 'gray.700',
-  _hover: {
-    transform: 'scale(1.02)',
-    transition: '0.2s',
-    borderColor: 'rgb(32, 134, 125)',
-    borderWidth: '1px',
-  },
-};
-
 export default function ProductsOverview() {
   const { category } = useParams();
 
@@ -36,7 +22,6 @@ export default function ProductsOverview() {
   useEffect(() => {
     loadProducts();
   }, [loadProducts]);
-  const borderColor = 'gray.700';
 
   return (
     <Box p={6}>
@@ -63,9 +48,7 @@ export default function ProductsOverview() {
         gap={6}
       >
         {products?.map((product: Product) => (
-          // <Box key={product?.id} {...cardStyles}>
           <ProductCard product={product} key={product?.id} />
-          // </Box>
         ))}
       </Grid>
     </Box>

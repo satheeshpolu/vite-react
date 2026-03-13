@@ -1,5 +1,4 @@
 import { Product } from '@/entities/product';
-import { toaster } from '@/components/ui/toaster';
 import { useToaster } from '@/shared/hooks/useToaster';
 
 export const useShareProduct = () => {

@@ -1,6 +1,6 @@
 import { Box, Flex, HStack, IconButton, Stack, Text, useDisclosure } from '@chakra-ui/react';
-import { Link as RouterLink, useMatch, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { FaArrowCircleDown, FaArrowCircleUp, FaOpencart } from 'react-icons/fa';
 import useCartStore from '@/stores/useCartStore';
 import { useTranslation } from 'react-i18next';

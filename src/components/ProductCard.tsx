@@ -1,5 +1,3 @@
-import useShareProduct from '@/hooks/useShareProduct';
-import useProductStore from '@/stores/useProductStore';
 import { Product } from '@/utils/types';
 import { Text } from '@chakra-ui/react';
 import { Box, Image, Heading, VStack } from '@chakra-ui/react';

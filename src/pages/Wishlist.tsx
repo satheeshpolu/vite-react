@@ -1,4 +1,4 @@
-import { Box, Grid, Image, Text, Heading, VStack, Stack, Flex } from '@chakra-ui/react';
+import { Box, Grid, Heading, Flex } from '@chakra-ui/react';
 import { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import useProductStore from '@/stores/useProductStore';
@@ -10,13 +10,6 @@ import ProductCard from '@/components/ProductCard';
 
 export default function Wishlist() {
   const { category } = useParams();
-  // console.log("category => ", category);
-  // const navigate = useNavigate();
-  // const addToCart = useCartStore(
-  //   (state: { addToCart: any }) => state.addToCart,
-  // );
-
-  const borderColor = 'gray.700';
   const [isEmpty, setIsEmpty] = useState(true);
   const { t } = useTranslation();
   const { fetchProducts, favoriteProducts } = useProductStore();

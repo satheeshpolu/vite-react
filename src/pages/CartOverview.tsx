@@ -10,7 +10,7 @@ import CartTable from '@/components/CartTable';
 const CartOverview = () => {
   const [isCartEmpty, setIsCartEmpty] = useState(true);
   const { t } = useTranslation();
-  const { items, getTotal, removeItem, updateQuantity } = useCartStore();
+  const { items, getTotal } = useCartStore();
 
   useEffect(() => {
     setIsCartEmpty(!items?.length);
