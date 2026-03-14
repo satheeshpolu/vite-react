@@ -11,7 +11,6 @@ export const productApi = {
   },
 
   getAll: (category: string) => {
-    debugger;
     return httpClient.get<ProductsResponse>(`/products/category/${category}`);
   },
 
