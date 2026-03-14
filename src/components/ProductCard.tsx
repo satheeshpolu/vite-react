@@ -3,6 +3,7 @@ import { Text } from '@chakra-ui/react';
 import { Box, Image, Heading, VStack } from '@chakra-ui/react';
 import { ProductCardFooter } from './shared/product/ProductCardFooter';
 import { ProductCardHeader } from './shared/product/ProductCardHeader';
+import { memo } from 'react';
 
 const cardStyles = {
   borderRadius: 'lg',
@@ -21,7 +22,7 @@ const cardStyles = {
 type ProductCardProps = {
   product: Product;
 };
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = memo(({ product }: ProductCardProps) => {
   return (
     <Box {...cardStyles}>
       <ProductCardHeader product={product} />
@@ -54,6 +55,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default ProductCard;

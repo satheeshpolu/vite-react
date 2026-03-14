@@ -1,36 +1,34 @@
 import { Box, Grid, Heading, Flex } from '@chakra-ui/react';
-import { useEffect, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
-import useProductStore from '@/stores/useProductStore';
 
 import { formatText } from '@/utils/helpers';
 import SortDropdown from '@/components/SortDropdown';
 import { BackButton } from '@/components/shared';
 import { Product } from '@/utils/types';
 import ProductCard from '@/components/ProductCard';
+import { sortProducts, useProducts } from '@/entities/product';
 
 export default function ProductsOverview() {
   const { category } = useParams();
 
-  const { products, fetchProducts, sortProducts } = useProductStore();
+  const { data: products } = useProducts(category ?? '');
 
-  const loadProducts = useCallback(() => {
-    fetchProducts(category as string);
-  }, [fetchProducts, category]);
+  const [sortedProducts, setSortedProducts] = useState<Product[] | undefined>(undefined);
 
-  useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+  const onFilter = useCallback(
+    (value: string) => {
+      setSortedProducts(
+        sortProducts(products?.products ?? [], value as 'price' | 'title' | 'rating')
+      );
+    },
+    [products]
+  );
 
   return (
     <Box p={6}>
       <Flex justify="flex-end" mt={4} mr={4} gap={8}>
-        <SortDropdown
-          onFilterChange={(value) => {
-            sortProducts(value);
-          }}
-        />
+        <SortDropdown onFilterChange={onFilter} />
         <BackButton />
       </Flex>
 
@@ -47,7 +45,7 @@ export default function ProductsOverview() {
         }}
         gap={6}
       >
-        {products?.map((product: Product) => (
+        {(sortedProducts ?? products?.products ?? []).map((product: Product) => (
           <ProductCard product={product} key={product?.id} />
         ))}
       </Grid>
