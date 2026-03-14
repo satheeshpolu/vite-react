@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { Portal, Select, createListCollection } from '@chakra-ui/react';
 
 type SortItemProps = {
@@ -7,7 +8,7 @@ type SortItemProps = {
   onFilterChange: (value: string) => void;
 };
 
-const SortDropdown = ({ onFilterChange }: SortItemProps) => {
+const SortDropdown = memo(({ onFilterChange }: SortItemProps) => {
   return (
     <Select.Root
       collection={frameworks}
@@ -38,7 +39,7 @@ const SortDropdown = ({ onFilterChange }: SortItemProps) => {
       </Portal>
     </Select.Root>
   );
-};
+});
 
 const frameworks = createListCollection({
   items: [

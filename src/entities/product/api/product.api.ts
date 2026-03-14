@@ -10,8 +10,8 @@ export const productApi = {
     return httpClient.get<ProductsResponse>(`/products/category/${category}`);
   },
 
-  getAll: (params?: { limit?: number; skip?: number }) => {
-    return httpClient.get<ProductsResponse>('/products', { params });
+  getAll: (category: string) => {
+    return httpClient.get<ProductsResponse>(`/products/category/${category}`);
   },
 
   search: (query: string) => {

@@ -37,10 +37,10 @@ export const useProductsByCategory = (category: string) => {
   });
 };
 
-export const useProducts = (params?: { limit?: number; skip?: number }) => {
+export const useProducts = (category: string) => {
   return useQuery({
-    queryKey: productKeys.list(params ?? {}),
-    queryFn: () => productApi.getAll(params),
+    queryKey: productKeys.list({ category }),
+    queryFn: () => productApi.getAll(category),
     staleTime: APP_CONSTANTS.STALE_TIME,
   });
 };
