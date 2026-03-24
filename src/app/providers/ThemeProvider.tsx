@@ -1,5 +1,5 @@
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react';
-import { ColorModeProvider } from '@/components/ui/color-mode';
+import { ColorModeProvider } from '@/shared/ui/chakra';
 import { ReactNode } from 'react';
 
 interface ThemeProviderProps {

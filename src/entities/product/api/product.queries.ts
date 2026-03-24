@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { productApi } from './product.api';
-import { APP_CONSTANTS } from '@/app/config';
+import { QUERY_CONSTANTS } from '@/shared/config/constants';
 
 export const productKeys = {
   all: ['products'] as const,
@@ -17,8 +17,8 @@ export const useProduct = (id: number) => {
   const query = useQuery({
     queryKey: productKeys.detail(id),
     queryFn: () => productApi.getById(id),
-    staleTime: APP_CONSTANTS.STALE_TIME,
-    gcTime: APP_CONSTANTS.GC_TIME,
+    staleTime: QUERY_CONSTANTS.STALE_TIME,
+    gcTime: QUERY_CONSTANTS.GC_TIME,
     enabled: !!id,
   });
 
@@ -32,7 +32,7 @@ export const useProductsByCategory = (category: string) => {
   return useQuery({
     queryKey: productKeys.list({ category }),
     queryFn: () => productApi.getByCategory(category),
-    staleTime: APP_CONSTANTS.STALE_TIME,
+    staleTime: QUERY_CONSTANTS.STALE_TIME,
     enabled: !!category,
   });
 };
@@ -41,7 +41,7 @@ export const useProducts = (params?: { limit?: number; skip?: number }) => {
   return useQuery({
     queryKey: productKeys.list(params ?? {}),
     queryFn: () => productApi.getAll(params),
-    staleTime: APP_CONSTANTS.STALE_TIME,
+    staleTime: QUERY_CONSTANTS.STALE_TIME,
   });
 };
 
@@ -49,7 +49,7 @@ export const useProductSearch = (query: string) => {
   return useQuery({
     queryKey: productKeys.list({ search: query }),
     queryFn: () => productApi.search(query),
-    staleTime: APP_CONSTANTS.STALE_TIME,
+    staleTime: QUERY_CONSTANTS.STALE_TIME,
     enabled: query.length >= 2,
   });
 };
@@ -58,6 +58,6 @@ export const useCategories = () => {
   return useQuery({
     queryKey: productKeys.categories(),
     queryFn: () => productApi.getCategories(),
-    staleTime: APP_CONSTANTS.GC_TIME, // Categories change rarely
+    staleTime: QUERY_CONSTANTS.GC_TIME, // Categories change rarely
   });
 };

@@ -10,33 +10,6 @@ const createHttpClient = (): AxiosInstance => {
     },
   });
 
-  // Request interceptor
-  instance.interceptors.request.use(
-    (config) => {
-      // Attach auth token if available
-      const token = localStorage.getItem('auth_token');
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
-    },
-    (error) => Promise.reject(error)
-  );
-
-  // Response interceptor
-  instance.interceptors.response.use(
-    (response) => response.data,
-    (error) => {
-      // Handle common errors globally
-      if (error.response?.status === 401) {
-        // Handle unauthorized
-        localStorage.removeItem('auth_token');
-        // Optionally redirect to login
-      }
-      return Promise.reject(error);
-    }
-  );
-
   return instance;
 };
 

@@ -1,25 +1,22 @@
 import { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { LoadingFallback } from './LoadingFallback';
-import Home from '@/pages/Home';
+import Home from '@/pages/home';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import { env } from '../config';
 
-// import CheckoutScreen from '@/pages/CheckoutScreen';
-
 // Lazy load all route components
-const Layout = lazy(() => import('@/pages/Layout'));
-const Contact = lazy(() => import('@/pages/Contact'));
-const Wishlist = lazy(() => import('@/pages/Wishlist'));
-const CartOverview = lazy(() => import('@/pages/CartOverview'));
-const ProductsOverview = lazy(() => import('@/pages/ProductsOverview'));
-const ProductDetails = lazy(() => import('@/pages/ProductDetails'));
-const RecentProducts = lazy(() => import('@/pages/RecentProducts'));
-const CheckoutSummary = lazy(() => import('@/pages/CheckoutSummary'));
-const Orders = lazy(() => import('@/pages/Orders'));
-
-const NotFound = lazy(() => import('@/pages/NotFound'));
+const Layout = lazy(() => import('@/widgets/layout'));
+const Contact = lazy(() => import('@/pages/contact'));
+const Wishlist = lazy(() => import('@/pages/wishlist'));
+const CartOverview = lazy(() => import('@/pages/cart'));
+const ProductsOverview = lazy(() => import('@/pages/products-overview'));
+const ProductDetails = lazy(() => import('@/pages/product-details'));
+const RecentProducts = lazy(() => import('@/pages/recent-products'));
+const CheckoutSummary = lazy(() => import('@/pages/checkout'));
+const Orders = lazy(() => import('@/pages/orders'));
+const NotFound = lazy(() => import('@/pages/not-found'));
 
 const stripePromise = loadStripe(env.STRIPE.PUBLISHABLE_KEY);
 
@@ -30,11 +27,6 @@ export function AppRoutes() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            {/* <Route path="blogs" element={<Blogs />}>
-            <Route index element={<BlogList />} />
-            <Route path=":id" element={<BlogPost />} />
-            <Route path="category/:category" element={<BlogCategory />} />
-          </Route> */}
             <Route path="contact" element={<Contact />} />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="recent_products" element={<RecentProducts />} />
